@@ -7,9 +7,16 @@ from fastapi.responses import RedirectResponse
 import csv
 from pathlib import Path
 import random
+from fastapi import Form, Request, Depends
+from fastapi.responses import RedirectResponse
+import os
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
+
+def verify_admin_session(request: Request):
+    if not request.session.get("admin_logged_in"):
+        return RedirectResponse("/admin-login", status_code=303)
 
 @router.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
@@ -77,3 +84,35 @@ def approve_request(company_name: str):
         writer.writerows(remaining)
 
     return RedirectResponse("/pending-requests", status_code=303)
+
+@router.get("/admin-login", response_class=HTMLResponse)
+def admin_login(request: Request):
+    return templates.TemplateResponse("admin_login.html", {"request": request})
+
+@router.post("/admin-login")
+def do_admin_login(request: Request, password: str = Form(...)):
+    if password == os.getenv("ADMIN_PASSWORD"):
+        request.session["admin_logged_in"] = True
+        return RedirectResponse("/dashboard", status_code=303)
+    return templates.TemplateResponse("admin_login.html", {
+        "request": request,
+        "error": "Invalid password"
+    })
+
+@router.get("/dashboard", response_class=HTMLResponse)
+def dashboard(request: Request):
+    if not request.session.get("admin_logged_in"):
+        return RedirectResponse("/admin-login", status_code=303)
+    ...
+
+@router.get("/approve-pdf/{submission_id}")
+def approve_pdf(submission_id: str):
+    import pandas as pd
+    df = pd.read_csv("app/data/form_log.csv")
+
+    df.loc[df["submission_id"] == submission_id, "status"] = "approved"
+    df.to_csv("app/data/form_log.csv", index=False)
+
+    # Optional: trigger email/send/flag here
+
+    return RedirectResponse("/dashboard", status_code=303)

@@ -18,7 +18,9 @@
               <th>Unit</th>
               <th>Date</th>
               <th>Technician</th>
+              <th>Status</th>
               <th>PDF</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -29,7 +31,21 @@
                 <td>{{ row.service_date }}</td>
                 <td>{{ row.technician_name }}</td>
                 <td>
+                  {% if row.status == "approved" %}
+                    <span class="text-green-600 font-semibold">Approved</span>
+                  {% else %}
+                    <span class="text-yellow-600 font-semibold">Awaiting Approval</span>
+                  {% endif %}
+                </td>
+                <td>
                   <a href="/view-pdf/{{ row.submission_id }}" target="_blank" class="btn btn-sm btn-outline">View PDF</a>
+                </td>
+                <td>
+                  {% if row.status != "approved" %}
+                    <a href="/approve-pdf/{{ row.submission_id }}" class="btn btn-sm btn-success">Approve</a>
+                  {% else %}
+                    <span class="text-gray-400 text-sm">—</span>
+                  {% endif %}
                 </td>
               </tr>
             {% endfor %}

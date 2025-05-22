@@ -57,6 +57,7 @@ async def handle_form(
             "technician_signature": technician_signature,
             "supervisor_name": supervisor_name,
             "supervisor_signature": supervisor_signature,
+            "status": "awaiting_approval"
         },
         "app/data/form_log.csv"
     )

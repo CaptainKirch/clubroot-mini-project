@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Technician Submission</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-6 bg-gray-100">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4">Technician Field Form</h1>
+      <form method="POST" action="/submit" enctype="multipart/form-data" class="space-y-4">
+
+        <input type="text" name="client" placeholder="Client Name" class="input input-bordered w-full" />
+        <input type="text" name="unit_number" placeholder="Unit Number" class="input input-bordered w-full" />
+        <input type="date" name="service_date" class="input input-bordered w-full" />
+        <textarea name="equipment_description" placeholder="Equipment Description" class="textarea textarea-bordered w-full"></textarea>
+
+        <input type="text" name="gps_location" placeholder="GPS Coordinates" class="input input-bordered w-full" />
+        <select name="dirt_level" class="select select-bordered w-full">
+          <option disabled selected>Dirt Level (1–5)</option>
+          {% for i in range(1, 6) %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="label">Before - Left</label>
+            <input type="file" name="before_left" class="file-input w-full" />
+          </div>
+          <div>
+            <label class="label">Before - Right</label>
+            <input type="file" name="before_right" class="file-input w-full" />
+          </div>
+        </div>
+
+        <!-- Add more photo fields as needed -->
+
+        <input type="text" name="technician_name" placeholder="Technician Name" class="input input-bordered w-full" />
+        <input type="text" name="technician_signature" placeholder="Technician Signature" class="input input-bordered w-full" />
+        <input type="text" name="supervisor_name" placeholder="Supervisor Name" class="input input-bordered w-full" />
+        <input type="text" name="supervisor_signature" placeholder="Supervisor Signature" class="input input-bordered w-full" />
+
+        <button type="submit" class="btn btn-primary w-full">Submit Report</button>
+      </form>
+    </div>
+    {% if message %}
+  <div class="alert alert-success">{{ message }}</div>
+{% endif %}
+  </body>
+</html>

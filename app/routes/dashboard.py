@@ -3,6 +3,10 @@ from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 import pandas as pd
 import os
+from fastapi.responses import RedirectResponse
+import csv
+from pathlib import Path
+import random
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -26,3 +30,50 @@ def view_pdf(submission_id: str):
     if os.path.exists(pdf_path):
         return FileResponse(pdf_path, media_type='application/pdf', filename="report.pdf")
     return {"error": "PDF not found"}
+
+
+@router.get("/pending-requests", response_class=HTMLResponse)
+def pending_requests(request: Request):
+    csv_path = "app/data/pending_pin_requests.csv"
+    try:
+        df = pd.read_csv(csv_path)
+        records = df.to_dict(orient="records")
+    except Exception:
+        records = []
+
+    return templates.TemplateResponse("pending_requests.html", {
+        "request": request,
+        "records": records
+    })
+
+@router.get("/approve-request/{company_name}")
+def approve_request(company_name: str):
+    pending_path = Path("app/data/pending_pin_requests.csv")
+    approved_path = Path("app/data/client_pins.csv")
+
+    # Load all pending requests
+    with open(pending_path, newline="") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    # Find and remove the approved row
+    remaining = [r for r in rows if r["company_name"] != company_name]
+    approved = [r for r in rows if r["company_name"] == company_name]
+
+    if approved:
+        pin = str(random.randint(1000, 9999))
+        with open(approved_path, "a", newline="") as f:
+            writer = csv.writer(f)
+            if not approved_path.exists() or approved_path.stat().st_size == 0:
+                writer.writerow(["client_name", "pin"])
+            writer.writerow([company_name, pin])
+
+        # (Optional) send welcome email here using r["email"]
+
+    # Overwrite pending file with remaining entries
+    with open(pending_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["company_name", "full_name", "email", "phone", "province"])
+        writer.writeheader()
+        writer.writerows(remaining)
+
+    return RedirectResponse("/pending-requests", status_code=303)

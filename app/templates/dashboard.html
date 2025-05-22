@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-6 bg-gray-100">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+      <h1 class="text-3xl font-bold mb-6">Submitted Reports</h1>
+
+      {% if records %}
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Unit</th>
+              <th>Date</th>
+              <th>Technician</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in records %}
+              <tr>
+                <td>{{ row.client }}</td>
+                <td>{{ row.unit_number }}</td>
+                <td>{{ row.service_date }}</td>
+                <td>{{ row.technician_name }}</td>
+                <td>
+                  <a href="/view-pdf/{{ row.submission_id }}" target="_blank" class="btn btn-sm btn-outline">View PDF</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No submissions found.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

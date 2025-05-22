@@ -7,7 +7,8 @@ import os
 from app.utils import file_io
 from app.utils.qr import generate_qr
 from app.utils.pdf import generate_pdf
-
+from app.scheduler import schedule_email
+import datetime
 templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
 
@@ -83,6 +84,9 @@ async def handle_form(
     pdf_path = f"{save_dir}/form_report.pdf"
     generate_pdf(form_data, images, qr_path, pdf_path, background_template_path=template_path)
 
+    # Delay email by 60 minutes
+    run_at = datetime.datetime.now() + datetime.timedelta(minutes=60)
+    schedule_email(pdf_path=pdf_path, recipient="marj@albertapowerwash.ca", delay_minutes=60)
 
     return templates.TemplateResponse("form.html", {
         "request": request,

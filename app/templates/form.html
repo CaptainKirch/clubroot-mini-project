@@ -9,8 +9,12 @@
   <body class="p-6 bg-gray-100">
     <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
       <h1 class="text-2xl font-bold mb-4">Technician Field Form</h1>
-      <form method="POST" action="/submit" enctype="multipart/form-data" class="space-y-4">
 
+      {% if message %}
+        <div class="alert alert-success mb-4">{{ message }}</div>
+      {% endif %}
+
+      <form method="POST" action="/submit" enctype="multipart/form-data" class="space-y-4">
         <input type="text" name="client" placeholder="Client Name" class="input input-bordered w-full" />
         <input type="text" name="unit_number" placeholder="Unit Number" class="input input-bordered w-full" />
         <input type="date" name="service_date" class="input input-bordered w-full" />
@@ -45,8 +49,5 @@
         <button type="submit" class="btn btn-primary w-full">Submit Report</button>
       </form>
     </div>
-    {% if message %}
-  <div class="alert alert-success">{{ message }}</div>
-{% endif %}
   </body>
 </html>

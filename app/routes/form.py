@@ -5,6 +5,9 @@ from fastapi import Form, File, UploadFile
 from uuid import uuid4
 import os
 from app.utils import file_io
+from app.utils.qr import generate_qr
+from app.utils.pdf import generate_pdf
+
 templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
 
@@ -32,6 +35,11 @@ async def handle_form(
     save_dir = f"app/data/submissions/{submission_id}"
     os.makedirs(save_dir, exist_ok=True)
 
+
+    qr_data = f"Unit: {unit_number} | Client: {client} | Date: {service_date}"
+    qr_path = f"{save_dir}/qr_code.png"
+    generate_qr(qr_data, qr_path)
+
     await file_io.save_file(before_left, save_dir, "before_left.jpg")
     await file_io.save_file(before_right, save_dir, "before_right.jpg")
 
@@ -51,6 +59,26 @@ async def handle_form(
         },
         "app/data/form_log.csv"
     )
+
+    form_data = {
+        "client": client,
+        "unit_number": unit_number,
+        "service_date": service_date,
+        "equipment_description": equipment_description,
+        "gps_location": gps_location,
+        "dirt_level": dirt_level,
+        "technician_name": technician_name,
+        "technician_signature": technician_signature,
+        "supervisor_name": supervisor_name,
+        "supervisor_signature": supervisor_signature,
+}
+    images = {
+        "before_left": f"{save_dir}/before_left.jpg",
+        "before_right": f"{save_dir}/before_right.jpg"
+}
+
+    pdf_path = f"{save_dir}/form_report.pdf"
+    generate_pdf(form_data, images, qr_path, pdf_path)
 
     return templates.TemplateResponse("form.html", {
         "request": request,

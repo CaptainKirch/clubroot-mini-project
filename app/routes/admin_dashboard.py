@@ -18,15 +18,19 @@ def verify_admin_session(request: Request):
     if not request.session.get("admin_logged_in"):
         return RedirectResponse("/admin-login", status_code=303)
 
-@router.get("/dashboard", response_class=HTMLResponse)
-def dashboard(request: Request):
+@router.get("/admin_dashboard", response_class=HTMLResponse)
+def admin_dashboard(request: Request):
+    if not request.session.get("admin_logged_in"):
+        return RedirectResponse("/admin-login", status_code=303)
+
     csv_path = "app/data/form_log.csv"
     if os.path.exists(csv_path):
         df = pd.read_csv(csv_path)
         records = df.to_dict(orient="records")
     else:
         records = []
-    return templates.TemplateResponse("dashboard.html", {
+
+    return templates.TemplateResponse("admin_dashboard.html", {
         "request": request,
         "records": records
     })
@@ -93,14 +97,14 @@ def admin_login(request: Request):
 def do_admin_login(request: Request, password: str = Form(...)):
     if password == os.getenv("ADMIN_PASSWORD"):
         request.session["admin_logged_in"] = True
-        return RedirectResponse("/dashboard", status_code=303)
+        return RedirectResponse("/admin_dashboard", status_code=303)
     return templates.TemplateResponse("admin_login.html", {
         "request": request,
         "error": "Invalid password"
     })
 
-@router.get("/dashboard", response_class=HTMLResponse)
-def dashboard(request: Request):
+@router.get("/admin_dashboard", response_class=HTMLResponse)
+def admin_dashboard(request: Request):
     if not request.session.get("admin_logged_in"):
         return RedirectResponse("/admin-login", status_code=303)
     ...
@@ -115,4 +119,4 @@ def approve_pdf(submission_id: str):
 
     # Optional: trigger email/send/flag here
 
-    return RedirectResponse("/dashboard", status_code=303)
+    return RedirectResponse("/admin_dashboard", status_code=303)

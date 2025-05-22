@@ -77,8 +77,12 @@ async def handle_form(
         "before_right": f"{save_dir}/before_right.jpg"
 }
 
+    # PDF generation using template background
+    template_path = "static/pdf_template.pdf"  # update with your actual path
+
     pdf_path = f"{save_dir}/form_report.pdf"
-    generate_pdf(form_data, images, qr_path, pdf_path)
+    generate_pdf(form_data, images, qr_path, pdf_path, background_template_path=template_path)
+
 
     return templates.TemplateResponse("form.html", {
         "request": request,

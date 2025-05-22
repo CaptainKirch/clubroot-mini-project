@@ -1,0 +1,10 @@
+<form method="POST" class="space-y-4 p-6 bg-white rounded shadow max-w-md mx-auto mt-10">
+  <h2 class="text-xl font-bold">Request Access to Client Portal</h2>
+  {% if message %}<p class="text-green-600">{{ message }}</p>{% endif %}
+  <input type="text" name="company_name" placeholder="Company Name" class="input input-bordered w-full" required />
+  <input type="text" name="full_name" placeholder="Your Full Name" class="input input-bordered w-full" required />
+  <input type="email" name="email" placeholder="Email Address" class="input input-bordered w-full" required />
+  <input type="text" name="phone" placeholder="Phone Number" class="input input-bordered w-full" required />
+  <input type="text" name="province" placeholder="Province" class="input input-bordered w-full" required />
+  <button class="btn btn-primary w-full">Submit Request</button>
+</form>

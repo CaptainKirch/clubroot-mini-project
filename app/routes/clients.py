@@ -32,3 +32,35 @@ async def client_dashboard(request: Request, client_name: str):
         "records": client_records,
         "client_name": client_name
     })
+
+@router.get("/request-pin", response_class=HTMLResponse)
+async def show_pin_request_form(request: Request):
+    return templates.TemplateResponse("request_pin.html", {"request": request})
+
+@router.post("/request-pin", response_class=HTMLResponse)
+async def handle_pin_request(
+    request: Request,
+    company_name: str = Form(...),
+    full_name: str = Form(...),
+    email: str = Form(...),
+    phone: str = Form(...),
+    province: str = Form(...)
+):
+    import csv
+    from pathlib import Path
+
+    file_path = Path("app/data/pending_pin_requests.csv")
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+
+    write_header = not file_path.exists()
+
+    with open(file_path, "a", newline="") as f:
+        writer = csv.writer(f)
+        if write_header:
+            writer.writerow(["company_name", "full_name", "email", "phone", "province"])
+        writer.writerow([company_name, full_name, email, phone, province])
+
+    return templates.TemplateResponse("request_pin.html", {
+        "request": request,
+        "message": "Request submitted. We'll be in touch with your PIN."
+    })

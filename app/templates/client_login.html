@@ -7,8 +7,18 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6 space-y-6">
+
+  <!-- Logo Header -->
+  <div class="w-full max-w-md">
+    <a href="/" class="flex items-center justify-center space-x-3">
+      <img src="/static/Transparent Background Logo.png" alt="Logo" class="h-20 w-auto" />
+    </a>
+  </div>
+
+  <!-- Login Card -->
   <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-    <h1 class="text-2xl font-bold text-center mb-6">🔐 Client Portal Login</h1>
+    <h1 class="text-2xl font-bold text-center mb-6">Client Portal Login</h1>
 
     {% if error %}
       <div class="alert alert-error mb-4">
@@ -24,7 +34,6 @@
         class="input input-bordered w-full"
         required
       />
-
       <input
         type="password"
         name="pin"
@@ -32,7 +41,6 @@
         class="input input-bordered w-full"
         required
       />
-
       <button class="btn btn-primary w-full">Login</button>
     </form>
 
@@ -42,4 +50,3 @@
     </p>
   </div>
 </body>
-</html>

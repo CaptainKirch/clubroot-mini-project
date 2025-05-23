@@ -18,7 +18,7 @@ def verify_admin_session(request: Request):
     if not request.session.get("admin_logged_in"):
         return RedirectResponse("/admin-login", status_code=303)
 
-@router.get("/admin_dashboard", response_class=HTMLResponse)
+@router.get("/admin-dashboard", response_class=HTMLResponse)
 def admin_dashboard(request: Request):
     if not request.session.get("admin_logged_in"):
         return RedirectResponse("/admin-login", status_code=303)

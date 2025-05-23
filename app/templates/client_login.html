@@ -1,7 +1,45 @@
-<form method="POST" class="space-y-4 p-6 bg-white rounded shadow max-w-md mx-auto mt-10">
-  <h2 class="text-xl font-bold">Client Portal Login</h2>
-  {% if error %}<p class="text-red-500">{{ error }}</p>{% endif %}
-  <input type="text" name="client_name" placeholder="Company Name" class="input input-bordered w-full" />
-  <input type="password" name="pin" placeholder="PIN" class="input input-bordered w-full" />
-  <button class="btn btn-primary w-full">Login</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client Portal Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-6">🔐 Client Portal Login</h1>
+
+    {% if error %}
+      <div class="alert alert-error mb-4">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <form method="POST" class="grid gap-4">
+      <input
+        type="text"
+        name="client_name"
+        placeholder="Company Name"
+        class="input input-bordered w-full"
+        required
+      />
+
+      <input
+        type="password"
+        name="pin"
+        placeholder="4-digit PIN"
+        class="input input-bordered w-full"
+        required
+      />
+
+      <button class="btn btn-primary w-full">Login</button>
+    </form>
+
+    <p class="text-sm text-center mt-6 text-gray-500">
+      Don’t have access yet?
+      <a href="/request-pin" class="link link-primary font-medium">Request a PIN</a>
+    </p>
+  </div>
+</body>
+</html>

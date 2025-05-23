@@ -13,14 +13,27 @@ async def show_login(request: Request):
 
 @router.post("/client-login", response_class=HTMLResponse)
 async def process_login(request: Request, client_name: str = Form(...), pin: str = Form(...)):
-    df = pd.read_csv("app/data/client_pins.csv")  # store PINs here
-    match = df[(df["client_name"] == client_name) & (df["pin"] == pin)]
+    df = pd.read_csv("app/data/client_pins.csv")
+
+    # Normalize both input and CSV for case and whitespace
+    input_name = client_name.strip().lower()
+    input_pin = pin.strip()
+
+    df["client_name_normalized"] = df["client_name"].astype(str).str.strip().str.lower()
+    df["pin_normalized"] = df["pin"].astype(str).str.strip()
+
+    match = df[
+        (df["client_name_normalized"] == input_name) &
+        (df["pin_normalized"] == input_pin)
+    ]
 
     if not match.empty:
-        response = RedirectResponse(url=f"/client-dashboard/{client_name}", status_code=303)
-        return response
-    else:
-        return templates.TemplateResponse("client_login.html", {"request": request, "error": "Invalid login."})
+        return RedirectResponse(url=f"/client-dashboard/{client_name}", status_code=303)
+
+    return templates.TemplateResponse("client_login.html", {
+        "request": request,
+        "error": "Invalid login."
+    })
 
 @router.get("/client-dashboard/{client_name}", response_class=HTMLResponse)
 async def client_dashboard(request: Request, client_name: str):

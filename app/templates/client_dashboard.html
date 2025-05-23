@@ -6,35 +6,43 @@
   <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="p-6 bg-gray-100">
-  <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
-    <h1 class="text-2xl font-bold mb-6">Welcome, {{ client_name }}</h1>
+<body class="bg-gray-100 min-h-screen p-6">
+  <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-6">Welcome, {{ client_name }}</h1>
 
     {% if records %}
-      <table class="table w-full">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Unit</th>
-            <th>Technician</th>
-            <th>View Report</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in records %}
+      <div class="overflow-x-auto">
+        <table class="table w-full table-zebra">
+          <thead class="bg-gray-100 text-gray-700">
             <tr>
-              <td>{{ row.service_date }}</td>
-              <td>{{ row.unit_number }}</td>
-              <td>{{ row.technician_name }}</td>
-              <td>
-                <a href="/view-pdf/{{ row.submission_id }}" class="btn btn-sm btn-outline" target="_blank">PDF</a>
-              </td>
+              <th>Date</th>
+              <th>Unit</th>
+              <th>Technician</th>
+              <th>Report</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for row in records %}
+              <tr>
+                <td>{{ row.service_date }}</td>
+                <td>{{ row.unit_number }}</td>
+                <td>{{ row.technician_name }}</td>
+                <td>
+                  <a href="/view-pdf/{{ row.submission_id }}"
+                     class="btn btn-sm btn-outline"
+                     target="_blank">
+                    📄 View PDF
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
-      <p>No reports available yet.</p>
+      <div class="text-gray-600 text-center text-lg mt-10">
+        No reports available yet.
+      </div>
     {% endif %}
   </div>
 </body>

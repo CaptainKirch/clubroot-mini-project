@@ -1,0 +1,3 @@
+submission_id,client,unit_number,service_date,equipment_description,gps_location,dirt_level,technician_name,technician_signature,supervisor_name,supervisor_signature,status
+abc123,Alberta Powerwash,Unit 4,2025-05-21,Skid steer,52.23,-2,John Doe,JDsig,Mike Sup,MSsig,awaiting_approval
+

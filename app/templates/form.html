@@ -1,53 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Technician Submission</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="p-6 bg-gray-100">
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
-      <h1 class="text-2xl font-bold mb-4">Technician Field Form</h1>
+<head>
+  <meta charset="UTF-8" />
+  <title>Technician Submission</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-6">🧰 Technician Disinfection Report</h1>
 
-      {% if message %}
-        <div class="alert alert-success mb-4">{{ message }}</div>
-      {% endif %}
+    {% if message %}
+      <div class="alert alert-success mb-4">{{ message }}</div>
+    {% endif %}
 
-      <form method="POST" action="/submit" enctype="multipart/form-data" class="space-y-4">
-        <input type="text" name="client" placeholder="Client Name" class="input input-bordered w-full" />
-        <input type="text" name="unit_number" placeholder="Unit Number" class="input input-bordered w-full" />
-        <input type="date" name="service_date" class="input input-bordered w-full" />
-        <textarea name="equipment_description" placeholder="Equipment Description" class="textarea textarea-bordered w-full"></textarea>
+    <form method="POST" action="/submit" enctype="multipart/form-data" class="grid gap-6">
 
-        <input type="text" name="gps_location" placeholder="GPS Coordinates" class="input input-bordered w-full" />
-        <select name="dirt_level" class="select select-bordered w-full">
-          <option disabled selected>Dirt Level (1–5)</option>
-          {% for i in range(1, 6) %}
-            <option value="{{ i }}">{{ i }}</option>
-          {% endfor %}
-        </select>
+      <!-- General Info -->
+      <div class="grid gap-4 md:grid-cols-2">
+        <input type="text" name="client" placeholder="Client Name" class="input input-bordered w-full" required />
+        <input type="text" name="unit_number" placeholder="Unit Number" class="input input-bordered w-full" required />
+        <input type="date" name="service_date" class="input input-bordered w-full md:col-span-2" required />
+      </div>
 
+      <textarea name="equipment_description" placeholder="Equipment Description"
+                class="textarea textarea-bordered w-full" rows="3" required></textarea>
+
+      <input type="text" name="gps_location" placeholder="GPS Coordinates" class="input input-bordered w-full" required />
+
+      <select name="dirt_level" class="select select-bordered w-full" required>
+        <option disabled selected>Dirt Level (1–5)</option>
+        {% for i in range(1, 6) %}
+          <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Inspection Notes -->
+      <textarea name="inspection_notes" placeholder="Pre-wash inspection notes"
+                class="textarea textarea-bordered w-full" rows="3" required></textarea>
+
+      <!-- Before Photos -->
+      <div>
+        <h2 class="font-semibold text-lg mb-2">📸 Before Photos</h2>
         <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="label">Before - Left</label>
-            <input type="file" name="before_left" class="file-input w-full" />
-          </div>
-          <div>
-            <label class="label">Before - Right</label>
-            <input type="file" name="before_right" class="file-input w-full" />
-          </div>
+          <input type="file" name="before_left" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="before_right" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="before_underside" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="before_wheel" class="file-input file-input-bordered w-full" required />
         </div>
+      </div>
 
-        <!-- Add more photo fields as needed -->
+      <!-- After Photos -->
+      <div>
+        <h2 class="font-semibold text-lg mb-2">✅ After Photos</h2>
+        <div class="grid grid-cols-2 gap-4">
+          <input type="file" name="after_left" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="after_right" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="after_underside" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="after_wheel" class="file-input file-input-bordered w-full" required />
+        </div>
+      </div>
 
-        <input type="text" name="technician_name" placeholder="Technician Name" class="input input-bordered w-full" />
-        <input type="text" name="technician_signature" placeholder="Technician Signature" class="input input-bordered w-full" />
-        <input type="text" name="supervisor_name" placeholder="Supervisor Name" class="input input-bordered w-full" />
-        <input type="text" name="supervisor_signature" placeholder="Supervisor Signature" class="input input-bordered w-full" />
+      <!-- Disinfection Photos -->
+      <div>
+        <h2 class="font-semibold text-lg mb-2">🧼 Disinfection Action</h2>
+        <div class="grid grid-cols-2 gap-4">
+          <input type="file" name="disinfect_wheel_1" class="file-input file-input-bordered w-full" required />
+          <input type="file" name="disinfect_wheel_2" class="file-input file-input-bordered w-full" required />
+        </div>
+      </div>
 
-        <button type="submit" class="btn btn-primary w-full">Submit Report</button>
-      </form>
-    </div>
-  </body>
+      <!-- Technician & Supervisor -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <input type="text" name="technician_name" placeholder="Technician Name" class="input input-bordered w-full" required />
+        <input type="text" name="technician_signature" placeholder="Technician Signature" class="input input-bordered w-full" required />
+        <input type="text" name="supervisor_name" placeholder="Supervisor Name" class="input input-bordered w-full" required />
+        <input type="text" name="supervisor_signature" placeholder="Supervisor Signature" class="input input-bordered w-full" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary w-full mt-4">✅ Submit Report</button>
+    </form>
+  </div>
+</body>
 </html>

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="p-6 bg-gray-100">
-    <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
-      <h1 class="text-3xl font-bold mb-6">Submitted Reports</h1>
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-4">📋 Submitted Reports</h1>
 
-      {% if records %}
-        <table class="table w-full">
-          <thead>
+    {% if records %}
+      <div class="overflow-x-auto">
+        <table class="table w-full table-zebra">
+          <thead class="bg-gray-200 text-gray-700">
             <tr>
               <th>Client</th>
               <th>Unit</th>
@@ -32,28 +33,31 @@
                 <td>{{ row.technician_name }}</td>
                 <td>
                   {% if row.status == "approved" %}
-                    <span class="text-green-600 font-semibold">Approved</span>
+                    <span class="badge badge-success">Approved</span>
                   {% else %}
-                    <span class="text-yellow-600 font-semibold">Awaiting Approval</span>
+                    <span class="badge badge-warning">Awaiting Approval</span>
                   {% endif %}
                 </td>
                 <td>
-                  <a href="/view-pdf/{{ row.submission_id }}" target="_blank" class="btn btn-sm btn-outline">View PDF</a>
+                  <a href="/view-pdf/{{ row.submission_id }}" target="_blank" class="btn btn-sm btn-outline">
+                    View PDF
+                  </a>
                 </td>
                 <td>
                   {% if row.status != "approved" %}
                     <a href="/approve-pdf/{{ row.submission_id }}" class="btn btn-sm btn-success">Approve</a>
                   {% else %}
-                    <span class="text-gray-400 text-sm">—</span>
+                    <span class="text-sm text-gray-400">—</span>
                   {% endif %}
                 </td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
-      {% else %}
-        <p>No submissions found.</p>
-      {% endif %}
-    </div>
-  </body>
+      </div>
+    {% else %}
+      <p class="text-gray-600">No submissions found.</p>
+    {% endif %}
+  </div>
+</body>
 </html>

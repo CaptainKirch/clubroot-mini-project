@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-
+from dotenv import load_dotenv
+load_dotenv()
 from app.routes import form, admin_dashboard, client_dashboard
 
 app = FastAPI()  # ✅ MOVE THIS UP HERE

@@ -15,15 +15,15 @@
 </div>
 <div class="max-w-7xl mx-auto mb-4 flex space-x-4">
   <a href="/admin-dashboard" class="btn btn-sm {{ 'btn-primary' if request.url.path == '/admin-dashboard' else 'btn-ghost' }}">
-    📝 Submissions
+    Submissions
   </a>
   <a href="/pending-requests" class="btn btn-sm {{ 'btn-primary' if request.url.path == '/pending-requests' else 'btn-ghost' }}">
-    🕐 Pending PINs
+    Pending PINs
   </a>
 </div>
 <body class="bg-gray-100 min-h-screen p-6">
   <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow">
-    <h1 class="text-3xl font-bold mb-4">📋 Submitted Reports</h1>
+    <h1 class="text-3xl font-bold mb-4">Submitted Reports</h1>
 
     {% if records %}
       <div class="overflow-x-auto">

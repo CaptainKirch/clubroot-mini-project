@@ -9,6 +9,7 @@ from app.utils.qr import generate_qr
 from app.utils.pdf import generate_pdf
 from app.scheduler import schedule_email
 import datetime
+from app.utils.file_io import remove_background
 templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
 
@@ -43,6 +44,10 @@ async def handle_form(
 
     await file_io.save_file(before_left, save_dir, "before_left.jpg")
     await file_io.save_file(before_right, save_dir, "before_right.jpg")
+
+    remove_background(f"{save_dir}/before_left.jpg", f"{save_dir}/before_left_cleaned.png")
+    file_io.remove_background(f"{save_dir}/before_right.jpg", f"{save_dir}/before_right_cleaned.png")
+
 
     file_io.save_csv(
         {

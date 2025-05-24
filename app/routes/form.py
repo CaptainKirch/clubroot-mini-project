@@ -129,7 +129,7 @@ async def handle_form(
     }
 
     pdf_path = f"{save_dir}/form_report.pdf"
-    template_path = "static/pdf_template.pdf"
+    template_path = "static/form_submission_template.pdf"
     generate_pdf(form_data, cleaned_images, qr_path, pdf_path, background_template_path=template_path)
 
     # # Schedule email

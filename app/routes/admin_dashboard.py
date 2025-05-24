@@ -34,10 +34,11 @@ def admin_dashboard(request: Request):
 
 @router.get("/view-pdf/{submission_id}")
 def view_pdf(submission_id: str):
-    pdf_path = f"app/data/submissions/{submission_id}/form_report.pdf"
+    pdf_path = f"app/data/submissions/{submission_id}/form_submission_template.pdf"
     if os.path.exists(pdf_path):
         return FileResponse(pdf_path, media_type='application/pdf', filename="report.pdf")
     return {"error": "PDF not found"}
+
 
 @router.get("/pending-requests", response_class=HTMLResponse)
 def pending_requests(request: Request):

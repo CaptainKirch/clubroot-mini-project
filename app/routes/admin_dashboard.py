@@ -1,15 +1,12 @@
-from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import APIRouter, Request, Form
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import pandas as pd
 import os
-from fastapi.responses import RedirectResponse
 import csv
 from pathlib import Path
 import random
-from fastapi import Form, Request, Depends
-from fastapi.responses import RedirectResponse
-import os
+from app.scheduler import schedule_email  # make sure this is imported!
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -42,7 +39,6 @@ def view_pdf(submission_id: str):
         return FileResponse(pdf_path, media_type='application/pdf', filename="report.pdf")
     return {"error": "PDF not found"}
 
-
 @router.get("/pending-requests", response_class=HTMLResponse)
 def pending_requests(request: Request):
     csv_path = "app/data/pending_pin_requests.csv"
@@ -62,23 +58,6 @@ def approve_request(company_name: str):
     pending_path = Path("app/data/pending_pin_requests.csv")
     approved_path = Path("app/data/client_pins.csv")
 
-@router.get("/delete-request/{company_name}")
-def delete_request(company_name: str):
-    pending_path = Path("app/data/pending_pin_requests.csv")
-
-    with open(pending_path, newline="") as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
-
-    remaining = [r for r in rows if r["company_name"] != company_name]
-
-    with open(pending_path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["company_name", "full_name", "email", "phone", "province"])
-        writer.writeheader()
-        writer.writerows(remaining)
-
-    return RedirectResponse("/pending-requests", status_code=303)
-
     # Load all pending requests
     with open(pending_path, newline="") as f:
         reader = csv.DictReader(f)
@@ -96,9 +75,26 @@ def delete_request(company_name: str):
                 writer.writerow(["client_name", "pin"])
             writer.writerow([company_name, pin])
 
-        # (Optional) send welcome email here using r["email"]
+        # Optional: send welcome email here using approved[0]["email"]
 
     # Overwrite pending file with remaining entries
+    with open(pending_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["company_name", "full_name", "email", "phone", "province"])
+        writer.writeheader()
+        writer.writerows(remaining)
+
+    return RedirectResponse("/pending-requests", status_code=303)
+
+@router.get("/delete-request/{company_name}")
+def delete_request(company_name: str):
+    pending_path = Path("app/data/pending_pin_requests.csv")
+
+    with open(pending_path, newline="") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    remaining = [r for r in rows if r["company_name"] != company_name]
+
     with open(pending_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["company_name", "full_name", "email", "phone", "province"])
         writer.writeheader()
@@ -114,25 +110,30 @@ def admin_login(request: Request):
 def do_admin_login(request: Request, password: str = Form(...)):
     if password == os.getenv("ADMIN_PASSWORD"):
         request.session["admin_logged_in"] = True
-        return RedirectResponse("/admin_dashboard", status_code=303)
+        return RedirectResponse("/admin-dashboard", status_code=303)
     return templates.TemplateResponse("admin_login.html", {
         "request": request,
         "error": "Invalid password"
     })
 
-@router.get("/admin_dashboard", response_class=HTMLResponse)
-def admin_dashboard(request: Request):
-    if not request.session.get("admin_logged_in"):
-        return RedirectResponse("/admin-login", status_code=303)
-    ...
-
 @router.get("/approve-pdf/{submission_id}")
 def approve_pdf(submission_id: str):
-    import pandas as pd
     df = pd.read_csv("app/data/form_log.csv")
 
+    # Update status to approved
     df.loc[df["submission_id"] == submission_id, "status"] = "approved"
     df.to_csv("app/data/form_log.csv", index=False)
+
+    # Get email and PDF path
+    email_row = df[df["submission_id"] == submission_id]
+    if not email_row.empty:
+        recipient_email = email_row["email"].values[0]
+        pdf_path = f"app/data/submissions/{submission_id}/form_report.pdf"
+
+        # Send email immediately (no delay)
+        schedule_email(pdf_path=pdf_path, recipient=recipient_email, delay_minutes=0)
+
+    return RedirectResponse("/admin-dashboard", status_code=303)
 
 @router.post("/update-email/{submission_id}")
 async def update_email(submission_id: str, email: str = Form(...)):
@@ -140,8 +141,3 @@ async def update_email(submission_id: str, email: str = Form(...)):
     df.loc[df["submission_id"] == submission_id, "email"] = email
     df.to_csv("app/data/form_log.csv", index=False)
     return RedirectResponse("/admin-dashboard", status_code=303)
-
-
-    # Optional: trigger email/send/flag here
-
-    return RedirectResponse("/admin_dashboard", status_code=303)

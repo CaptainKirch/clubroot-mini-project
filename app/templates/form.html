@@ -60,35 +60,55 @@
                 class="textarea textarea-bordered w-full" rows="3" required></textarea>
 
       <!-- Before Photos -->
-      <div>
-        <h2 class="font-semibold text-lg mb-2">Before Photos</h2>
-        <div class="grid grid-cols-2 gap-4">
-          <input type="file" name="before_left" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="before_right" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="before_underside" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="before_wheel" class="file-input file-input-bordered w-full" required />
-        </div>
-      </div>
+<div>
+  <h2 class="font-semibold text-lg mb-2">Before Photos (Pre-Wash)</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <label>Left Side (Before)
+      <input type="file" name="before_left" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Right Side (Before)
+      <input type="file" name="before_right" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Undercarriage (Before)
+      <input type="file" name="before_underside" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Wheel Well (Before)
+      <input type="file" name="before_wheel" class="file-input file-input-bordered w-full" required />
+    </label>
+  </div>
+</div>
 
-      <!-- After Photos -->
-      <div>
-        <h2 class="font-semibold text-lg mb-2">After Photos</h2>
-        <div class="grid grid-cols-2 gap-4">
-          <input type="file" name="after_left" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="after_right" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="after_underside" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="after_wheel" class="file-input file-input-bordered w-full" required />
-        </div>
-      </div>
+<!-- After Photos -->
+<div>
+  <h2 class="font-semibold text-lg mb-2">After Photos (Post-Wash + Rinse)</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <label>Left Side (After)
+      <input type="file" name="after_left" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Right Side (After)
+      <input type="file" name="after_right" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Undercarriage (After)
+      <input type="file" name="after_underside" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Wheel Well (After)
+      <input type="file" name="after_wheel" class="file-input file-input-bordered w-full" required />
+    </label>
+  </div>
+</div>
 
-      <!-- Disinfection Photos -->
-      <div>
-        <h2 class="font-semibold text-lg mb-2">Disinfection Action</h2>
-        <div class="grid grid-cols-2 gap-4">
-          <input type="file" name="disinfect_wheel_1" class="file-input file-input-bordered w-full" required />
-          <input type="file" name="disinfect_wheel_2" class="file-input file-input-bordered w-full" required />
-        </div>
-      </div>
+<!-- Disinfection Action Photos -->
+<div>
+  <h2 class="font-semibold text-lg mb-2">Disinfection Action Photos</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <label>Wheel Well (Disinfection Spraying)
+      <input type="file" name="disinfect_wheel_1" class="file-input file-input-bordered w-full" required />
+    </label>
+    <label>Undercarriage (Disinfection Spraying)
+      <input type="file" name="disinfect_wheel_2" class="file-input file-input-bordered w-full" required />
+    </label>
+  </div>
+</div>
 
       <!-- Technician & Supervisor -->
       <div class="grid md:grid-cols-2 gap-4">

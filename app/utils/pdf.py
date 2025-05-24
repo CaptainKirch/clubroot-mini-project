@@ -16,8 +16,12 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
     c.drawString(50, 660, f"Date: {data['service_date']}")
     c.drawString(50, 640, f"Tech: {data['technician_name']}")
     c.drawString(50, 620, f"Supervisor: {data['supervisor_name']}")
+    c.drawString(50, 580, f"GPS: {data['gps_location']}")
     c.drawString(50, 600, f"Dirt Level: {data['dirt_level']}")
     
+    c.drawImage(data['technician_signature_path'], x=50, y=500, width=200, height=50)
+
+
     # Draw QR Code
     c.drawImage(qr_path, x=450, y=620, width=100, height=100)
 

@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from uuid import uuid4
 import os
 import datetime
+import base64
 
 from app.utils import file_io
 from app.utils.qr import generate_qr
@@ -46,10 +47,10 @@ async def handle_form(
     disinfect_wheel_2: UploadFile = File(...),
 
     technician_name: str = Form(...),
-    technician_signature: str = Form(...),
+    technician_signature: str = Form(...),  # base64 string
     supervisor_name: str = Form(...),
     supervisor_signature: str = Form(...),
-    technician_email: str = Form(...),  # <-- NEWLY ADDED
+    technician_email: str = Form(...),
 ):
     submission_id = str(uuid4())
     save_dir = f"app/data/submissions/{submission_id}"
@@ -83,6 +84,13 @@ async def handle_form(
         remove_background(raw_path, clean_path)
         cleaned_images[label] = clean_path
 
+    # Decode and save technician signature
+    signature_data = technician_signature.split(",")[1]  # remove 'data:image/png;base64,'
+    signature_bytes = base64.b64decode(signature_data)
+    signature_path = f"{save_dir}/technician_signature.png"
+    with open(signature_path, "wb") as f:
+        f.write(signature_bytes)
+
     # Log to CSV
     file_io.save_csv(
         {
@@ -95,10 +103,10 @@ async def handle_form(
             "dirt_level": dirt_level,
             "inspection_notes": inspection_notes,
             "technician_name": technician_name,
-            "technician_signature": technician_signature,
+            "technician_signature": signature_path,  # storing the saved file path
             "supervisor_name": supervisor_name,
             "supervisor_signature": supervisor_signature,
-            "email": technician_email,  # <-- ADDED HERE
+            "email": technician_email,
             "status": "awaiting_approval"
         },
         "app/data/form_log.csv"
@@ -114,10 +122,10 @@ async def handle_form(
         "dirt_level": dirt_level,
         "inspection_notes": inspection_notes,
         "technician_name": technician_name,
-        "technician_signature": technician_signature,
+        "technician_signature_path": signature_path,  # pass to PDF generator
         "supervisor_name": supervisor_name,
         "supervisor_signature": supervisor_signature,
-        "technician_email": technician_email  # <-- ADDED HERE
+        "technician_email": technician_email
     }
 
     pdf_path = f"{save_dir}/form_report.pdf"

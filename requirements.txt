@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+jinja2
+pandas
+qrcode
+python-dotenv
+apscheduler
+requests
+pillow
+pillow-heif
+PyPDF2
+reportlab

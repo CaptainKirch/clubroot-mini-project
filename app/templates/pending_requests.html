@@ -6,30 +6,27 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="p-6 bg-gray-100">
-  <body class="bg-gray-100 min-h-screen p-6">
+<body class="bg-gray-100 min-h-screen p-6">
 
   <!-- Logo Header -->
   <div class="max-w-6xl mx-auto mb-4">
     <a href="/" class="flex items-center space-x-3">
       <img src="/static/Transparent Background Logo.png" alt="Logo" class="h-20 w-auto" />
-      <span class="text-2xl font-bold text-gray-800"></span>
+      <span class="text-2xl font-bold text-gray-800">Clubroot Reporting</span>
     </a>
   </div>
 
   <!-- Navigation Tabs -->
   <div class="max-w-6xl mx-auto mb-4 flex space-x-4">
-    <a href="/admin-dashboard" class="btn btn-sm {{ 'btn-primary' if request.url.path == '/admin-dashboard' else 'btn-ghost' }}">
+    <a href="/admin-dashboard" class="btn btn-sm {{ 'bg-[#1DA1F2] text-white' if request.url.path == '/admin-dashboard' else 'btn-ghost' }}">
       Submissions
     </a>
-    <a href="/pending-requests" class="btn btn-sm {{ 'btn-primary' if request.url.path == '/pending-requests' else 'btn-ghost' }}">
+    <a href="/pending-requests" class="btn btn-sm {{ 'bg-[#1DA1F2] text-white' if request.url.path == '/pending-requests' else 'btn-ghost' }}">
       Pending PINs
     </a>
   </div>
 
   <!-- Content -->
-  <div class=
-
   <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
     <h1 class="text-3xl font-bold mb-6">Pending PIN Requests</h1>
 
@@ -54,8 +51,10 @@
               <td>{{ row.phone }}</td>
               <td>{{ row.province }}</td>
               <td>
-        <a href="/approve-request/{{ row.company_name }}" class="btn btn-sm btn-success">Approve</a>
-      </td>
+                <a href="/approve-request/{{ row.company_name }}" class="btn btn-sm bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">
+                  Approve
+                </a>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
@@ -64,5 +63,7 @@
       <p>No pending requests.</p>
     {% endif %}
   </div>
+  
 </body>
 </html>
+

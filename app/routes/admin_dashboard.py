@@ -134,6 +134,14 @@ def approve_pdf(submission_id: str):
     df.loc[df["submission_id"] == submission_id, "status"] = "approved"
     df.to_csv("app/data/form_log.csv", index=False)
 
+@router.post("/update-email/{submission_id}")
+async def update_email(submission_id: str, email: str = Form(...)):
+    df = pd.read_csv("app/data/form_log.csv")
+    df.loc[df["submission_id"] == submission_id, "email"] = email
+    df.to_csv("app/data/form_log.csv", index=False)
+    return RedirectResponse("/admin-dashboard", status_code=303)
+
+
     # Optional: trigger email/send/flag here
 
     return RedirectResponse("/admin_dashboard", status_code=303)

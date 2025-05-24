@@ -49,6 +49,7 @@ async def handle_form(
     technician_signature: str = Form(...),
     supervisor_name: str = Form(...),
     supervisor_signature: str = Form(...),
+    technician_email: str = Form(...),  # <-- NEWLY ADDED
 ):
     submission_id = str(uuid4())
     save_dir = f"app/data/submissions/{submission_id}"
@@ -97,6 +98,7 @@ async def handle_form(
             "technician_signature": technician_signature,
             "supervisor_name": supervisor_name,
             "supervisor_signature": supervisor_signature,
+            "email": technician_email,  # <-- ADDED HERE
             "status": "awaiting_approval"
         },
         "app/data/form_log.csv"
@@ -115,6 +117,7 @@ async def handle_form(
         "technician_signature": technician_signature,
         "supervisor_name": supervisor_name,
         "supervisor_signature": supervisor_signature,
+        "technician_email": technician_email  # <-- ADDED HERE
     }
 
     pdf_path = f"{save_dir}/form_report.pdf"

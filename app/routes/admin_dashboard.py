@@ -62,6 +62,23 @@ def approve_request(company_name: str):
     pending_path = Path("app/data/pending_pin_requests.csv")
     approved_path = Path("app/data/client_pins.csv")
 
+@router.get("/delete-request/{company_name}")
+def delete_request(company_name: str):
+    pending_path = Path("app/data/pending_pin_requests.csv")
+
+    with open(pending_path, newline="") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    remaining = [r for r in rows if r["company_name"] != company_name]
+
+    with open(pending_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["company_name", "full_name", "email", "phone", "province"])
+        writer.writeheader()
+        writer.writerows(remaining)
+
+    return RedirectResponse("/pending-requests", status_code=303)
+
     # Load all pending requests
     with open(pending_path, newline="") as f:
         reader = csv.DictReader(f)

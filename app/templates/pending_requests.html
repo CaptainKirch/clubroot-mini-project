@@ -50,10 +50,13 @@
               <td>{{ row.email }}</td>
               <td>{{ row.phone }}</td>
               <td>{{ row.province }}</td>
-              <td>
-                <a href="/approve-request/{{ row.company_name }}" class="btn btn-sm bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">
-                  Approve
-                </a>
+              <td class="flex space-x-2">
+              <a href="/approve-request/{{ row.company_name }}" class="btn btn-sm bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">
+              Approve
+              </a>
+              <a href="/delete-request/{{ row.company_name }}" class="btn btn-sm bg-red-500 hover:bg-red-600 text-white">
+              Delete
+              </a>
               </td>
             </tr>
           {% endfor %}

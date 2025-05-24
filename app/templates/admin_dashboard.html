@@ -14,12 +14,12 @@
   </a>
 </div>
 <div class="max-w-7xl mx-auto mb-4 flex space-x-4">
-  <a href="/admin-dashboard" class="btn btn-sm {{ 'btn-primary' if request.url.path == '/admin-dashboard' else 'btn-ghost' }}">
-    Submissions
-  </a>
-  <a href="/pending-requests" class="btn btn-sm {{ 'btn-primary' if request.url.path == '/pending-requests' else 'btn-ghost' }}">
-    Pending PINs
-  </a>
+  <a href="/admin-dashboard" class="btn btn-sm {{ 'bg-[#1DA1F2] text-white' if request.url.path == '/admin-dashboard' else 'btn-ghost' }}">
+  Submissions
+</a>
+<a href="/pending-requests" class="btn btn-sm {{ 'bg-[#1DA1F2] text-white' if request.url.path == '/pending-requests' else 'btn-ghost' }}">
+  Pending PINs
+</a>
 </div>
 <body class="bg-gray-100 min-h-screen p-6">
   <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow">
@@ -54,13 +54,14 @@
                   {% endif %}
                 </td>
                 <td>
-                  <a href="/view-pdf/{{ row.submission_id }}" target="_blank" class="btn btn-sm btn-outline">
-                    View PDF
+                  <a href="/view-pdf/{{ row.submission_id }}" target="_blank" class="btn btn-sm bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">
+                  View PDF
                   </a>
                 </td>
                 <td>
                   {% if row.status != "approved" %}
-                    <a href="/approve-pdf/{{ row.submission_id }}" class="btn btn-sm btn-success">Approve</a>
+                    <a href="/approve-pdf/{{ row.submission_id }}" class="btn btn-sm bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">Approve
+                    </a>
                   {% else %}
                     <span class="text-sm text-gray-400">—</span>
                   {% endif %}

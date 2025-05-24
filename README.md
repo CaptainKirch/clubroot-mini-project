@@ -1,47 +1,81 @@
-# 🧼 Clubroot Reporting & Automation System
+Clubroot Reporting & Automation System
+A technician-facing and admin-controlled system for field data collection, QR code tagging, PDF report generation, and controlled email distribution — built with FastAPI, TailwindCSS, and Python tooling.
 
-A technician-facing web app for field data collection, QR code tagging, PDF report generation, and automated internal reporting — built with FastAPI, TailwindCSS, and Python-based tooling.
+📦 Features
+✅ Phase 1 (Technician Workflow)
+Mobile-friendly technician form with:
 
----
+Photo uploads (before, after, disinfection)
 
-## 📦 Features
+Auto-captured GPS location (browser-based)
 
-### ✅ Phase 1 (Internal Workflow)
-- Mobile-friendly technician form (photo uploads, GPS, signatures)
-- File-safe submission saving (namespaced per UUID)
-- CSV-based data logging
-- QR code generation (one per unit)
-- Branded PDF report generation
-- 60-minute buffer with scheduled email report delivery
-- Admin dashboard to view/download submissions
+Digital signature capture (drawn on-screen)
 
-### 🔒 Phase 2 (Client Access Portal)
-- Secure client login (via PIN)
-- View/download submitted reports by unit or license
-- QR-code-based report lookups
-- PIN request workflow with admin approval
+Technician email collection
 
----
+UUID-namespaced folder saving per submission
 
-## 🛠 Stack
+CSV-based master log (form_log.csv)
 
-| Layer         | Tooling                        |
-|---------------|--------------------------------|
-| Frontend UI   | TailwindCSS + DaisyUI (Jinja2) |
-| Backend       | FastAPI                        |
-| Templating    | Jinja2                         |
-| File Uploads  | FastAPI `UploadFile`           |
-| Data Storage  | CSV + folder-based media       |
-| QR Code       | `qrcode` Python lib            |
-| PDF Generator | `FPDF` or `WeasyPrint`         |
-| Scheduler     | APScheduler                    |
-| Email Logic   | `smtplib` (config via `.env`)  |
+Branded PDF report generation including:
 
----
+Technician signature image
 
-## 🚀 Quickstart
+GPS coordinates
 
-```bash
+Embedded QR code per report
+
+Background image/template support on PDFs
+
+✅ Phase 2 (Admin Dashboard + Control)
+Secure admin login with password protection
+
+Admin dashboard to:
+
+View all submissions and their statuses
+
+Edit recipient email before approval
+
+Approve reports (changes status + triggers email send)
+
+Delete or manage pending client PIN requests
+
+Email dispatch only after admin approval
+
+Integrated pending PIN workflow:
+
+Clients request PINs via portal
+
+Admin reviews + approves to grant access
+
+✅ Phase 3 (Client Portal)
+Secure client login via approved PIN
+
+Client dashboard to:
+
+View/download their related reports
+
+Track report statuses
+
+Access PDFs with QR-code cross-validation
+
+🛠 Stack
+Layer	Tooling
+Frontend UI	TailwindCSS + DaisyUI (Jinja2)
+Backend	FastAPI
+Templating	Jinja2
+File Uploads	FastAPI UploadFile
+Data Storage	CSV + structured media folders
+QR Code	qrcode Python library
+PDF Generator	reportlab + PyPDF2
+Scheduler	APScheduler (or custom script)
+Email Logic	smtplib (configured via .env)
+Signature Pad	signature_pad.js in-browser
+
+🚀 Quickstart
+bash
+Copy
+Edit
 # Clone and CD
 git clone https://github.com/your-username/clubroot_reporting.git
 cd clubroot_reporting
@@ -55,3 +89,21 @@ pip install -r requirements.txt
 
 # Run the app
 uvicorn app.main:app --reload
+🔑 Admin Setup
+Add a .env file with:
+
+ADMIN_PASSWORD=your-secure-password
+
+EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS (for outgoing emails)
+
+Any API keys (e.g., background removal, Slazzer)
+
+🌍 Access Points
+Route	Purpose
+/form	Technician form (field input)
+/admin-login	Admin login page
+/admin-dashboard	Admin dashboard view
+/pending-requests	Pending PIN requests
+/client-login	Client portal login
+/client-dashboard	Client report dashboard
+

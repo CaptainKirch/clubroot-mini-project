@@ -91,26 +91,29 @@ async def handle_form(
     with open(signature_path, "wb") as f:
         f.write(signature_bytes)
 
-    # Log to CSV
+    pdf_path = f"{save_dir}/form_report.pdf"
+
     file_io.save_csv(
-        {
-            "submission_id": submission_id,
-            "client": client,
-            "unit_number": unit_number,
-            "service_date": service_date,
-            "description": equipment_description,
-            "gps_location": gps_location,
-            "dirt_level": dirt_level,
-            "inspection_notes": inspection_notes,
-            "technician_name": technician_name,
-            "technician_signature": signature_path,  # storing the saved file path
-            "supervisor_name": supervisor_name,
-            "supervisor_signature": supervisor_signature,
-            "email": technician_email,
-            "status": "awaiting_approval"
-        },
-        "app/data/form_log.csv"
-    )
+    {
+        "submission_id": submission_id,
+        "client": client,
+        "unit_number": unit_number,
+        "service_date": service_date,
+        "description": equipment_description,
+        "gps_location": gps_location,
+        "dirt_level": dirt_level,
+        "inspection_notes": inspection_notes,
+        "technician_name": technician_name,
+        "technician_signature": signature_path,
+        "supervisor_name": supervisor_name,
+        "supervisor_signature": supervisor_signature,
+        "email": technician_email,
+        "status": "awaiting_approval",
+        "pdf_path": pdf_path  # ✅ This is the key line you're missing
+    },
+    "app/data/form_log.csv"
+)
+
 
     # Generate PDF
     form_data = {

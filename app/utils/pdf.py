@@ -25,40 +25,38 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
 
         if page_num == 1:
             if images.get("before_left"):
-                c.drawImage(images["before_left"], x=154, y=568, width=120, height=80, mask='auto')
+                c.drawImage(images["before_left"], x=160, y=562, width=100, height=66, mask='auto')
             if images.get("before_right"):
-                c.drawImage(images["before_right"], x=421, y=558, width=120, height=80, mask='auto')
+                c.drawImage(images["before_right"], x=426, y=552, width=100, height=66, mask='auto')
             if images.get("before_wheel"):
-                c.drawImage(images["before_wheel"], x=161, y=257, width=120, height=80, mask='auto')
+                c.drawImage(images["before_wheel"], x=167, y=252, width=100, height=66, mask='auto')
             if images.get("before_undercarriage"):
-                c.drawImage(images["before_undercarriage"], x=430, y=252, width=120, height=80, mask='auto')
+                c.drawImage(images["before_undercarriage"], x=434, y=247, width=100, height=66, mask='auto')
 
         if page_num == 2:
             if images.get("after_left"):
-                c.drawImage(images["after_left"], x=155, y=551, width=120, height=80, mask='auto')
+                c.drawImage(images["after_left"], x=161, y=545, width=100, height=66, mask='auto')
             if images.get("after_right"):
-                c.drawImage(images["after_right"], x=428, y=550, width=120, height=80, mask='auto')
+                c.drawImage(images["after_right"], x=430, y=544, width=100, height=66, mask='auto')
             if images.get("after_wheel"):
-                c.drawImage(images["after_wheel"], x=161, y=256, width=120, height=80, mask='auto')
+                c.drawImage(images["after_wheel"], x=167, y=250, width=100, height=66, mask='auto')
             if images.get("after_undercarriage"):
-                c.drawImage(images["after_undercarriage"], x=427, y=275, width=120, height=80, mask='auto')
+                c.drawImage(images["after_undercarriage"], x=430, y=269, width=100, height=66, mask='auto')
 
         if page_num == 3:
             if images.get("disinfecting_wheel"):
-                c.drawImage(images["disinfecting_wheel"], x=160, y=559, width=120, height=80, mask='auto')
+                c.drawImage(images["disinfecting_wheel"], x=165, y=553, width=100, height=66, mask='auto')
             if images.get("disinfecting_undercarriage"):
-                c.drawImage(images["disinfecting_undercarriage"], x=422, y=552, width=120, height=80, mask='auto')
+                c.drawImage(images["disinfecting_undercarriage"], x=428, y=546, width=100, height=66, mask='auto')
 
-            # Technician name and signature
+            # Worker name and signature
             c.setFont("Helvetica", 10)
             c.drawString(228, 208, data.get("technician_name", ""))
             if data.get("technician_signature_path"):
-                c.drawImage(data["technician_signature_path"], x=505, y=210, width=100, height=40, mask='auto')
+                c.drawImage(data["technician_signature_path"], x=455, y=210, width=90, height=35, mask='auto')
 
-            # Supervisor name and (placeholder) signature
+            # Foreman name (no signature)
             c.drawString(225, 91, data.get("supervisor_name", ""))
-            if data.get("technician_signature_path"):
-                c.drawImage(data["technician_signature_path"], x=505, y=93, width=100, height=40, mask='auto')
 
         c.save()
         packet.seek(0)

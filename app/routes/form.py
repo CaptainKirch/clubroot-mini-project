@@ -117,7 +117,7 @@ async def handle_form(
         "client": client,
         "unit_number": unit_number,
         "service_date": service_date,
-        "equipment_description": equipment_description,
+        "description": equipment_description,
         "gps_location": gps_location,
         "dirt_level": dirt_level,
         "inspection_notes": inspection_notes,

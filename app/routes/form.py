@@ -98,7 +98,7 @@ async def handle_form(
             "client": client,
             "unit_number": unit_number,
             "service_date": service_date,
-            "equipment_description": equipment_description,
+            "description": equipment_description,
             "gps_location": gps_location,
             "dirt_level": dirt_level,
             "inspection_notes": inspection_notes,
@@ -130,7 +130,24 @@ async def handle_form(
 
     pdf_path = f"{save_dir}/form_report.pdf"
     template_path = "static/form_submission_template.pdf"
-    generate_pdf(form_data, cleaned_images, qr_path, pdf_path, background_template_path=template_path)
+    # Remap image keys to match what PDF expects
+    pdf_images = {
+        "before_left": cleaned_images["before_left"],
+        "before_right": cleaned_images["before_right"],
+        "before_wheel": cleaned_images["before_wheel"],
+        "before_undercarriage": cleaned_images["before_underside"],
+
+        "after_left": cleaned_images["after_left"],
+        "after_right": cleaned_images["after_right"],
+        "after_wheel": cleaned_images["after_wheel"],
+        "after_undercarriage": cleaned_images["after_underside"],
+
+        "disinfecting_wheel": cleaned_images["disinfect_wheel_1"],
+        "disinfecting_undercarriage": cleaned_images["disinfect_wheel_2"]
+}
+
+    generate_pdf(form_data, pdf_images, qr_path, pdf_path, background_template_path=template_path)
+
 
     # # Schedule email
     # schedule_email(pdf_path=pdf_path, recipient="marj@albertapowerwash.ca", delay_minutes=60)

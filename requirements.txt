@@ -10,3 +10,4 @@ pillow
 pillow-heif
 PyPDF2
 reportlab
+itsdangerous>=2.0

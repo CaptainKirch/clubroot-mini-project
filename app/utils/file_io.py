@@ -16,13 +16,21 @@ async def save_file(upload: UploadFile, folder: str, filename: str):
     with open(path, "wb") as buffer:
         shutil.copyfileobj(upload.file, buffer)
 
+CSV_COLUMNS = [
+    "submission_id", "client", "unit_number", "service_date", "description",
+    "gps_location", "dirt_level", "inspection_notes", "technician_name",
+    "technician_signature", "supervisor_name", "supervisor_signature",
+    "email", "status", "pdf_path"
+]
+
 def save_csv(data: Dict, csv_path: str):
     file_exists = os.path.isfile(csv_path)
     with open(csv_path, mode="a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=data.keys())
+        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, quoting=csv.QUOTE_MINIMAL)
         if not file_exists:
             writer.writeheader()
         writer.writerow(data)
+
 
 def convert_heic_to_jpg(input_path: str, output_path: str):
     img = Image.open(input_path)

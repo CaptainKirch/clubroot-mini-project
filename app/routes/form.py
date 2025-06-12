@@ -109,7 +109,8 @@ async def handle_form(
         "supervisor_signature": supervisor_signature,
         "email": technician_email,
         "status": "awaiting_approval",
-        "pdf_path": pdf_path  # ✅ This is the key line you're missing
+        "pdf_path": f"/submissions/{submission_id}/form_report.pdf"
+  # ✅ This is the key line you're missing
     },
     "app/data/form_log.csv"
 )

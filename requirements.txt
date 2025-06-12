@@ -11,3 +11,4 @@ pillow-heif
 PyPDF2
 reportlab
 itsdangerous>=2.0
+python-multipart>=0.0.5

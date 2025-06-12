@@ -32,12 +32,16 @@ def admin_dashboard(request: Request):
         "records": records
     })
 
+from fastapi.responses import FileResponse
+import os
+
 @router.get("/view-pdf/{submission_id}")
 def view_pdf(submission_id: str):
-    pdf_path = f"app/data/submissions/{submission_id}/form_submission_template.pdf"
+    pdf_path = f"app/data/submissions/{submission_id}/form_report.pdf"
     if os.path.exists(pdf_path):
-        return FileResponse(pdf_path, media_type='application/pdf', filename="report.pdf")
+        return FileResponse(pdf_path, media_type='application/pdf', filename="form_report.pdf")
     return {"error": "PDF not found"}
+
 
 
 @router.get("/pending-requests", response_class=HTMLResponse)

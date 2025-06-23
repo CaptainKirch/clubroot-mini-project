@@ -132,7 +132,7 @@ async def handle_form(
     }
 
     pdf_path = f"{save_dir}/form_report.pdf"
-    template_path = "static/form_submission_template.pdf"
+    template_path = "static/CLUBROOT PDF TEMPLATE.pdf"
     # Remap image keys to match what PDF expects
     pdf_images = {
         "before_left": cleaned_images["before_left"],

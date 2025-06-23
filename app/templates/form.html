@@ -31,13 +31,16 @@
              [&_textarea]:bg-white [&_textarea]:text-gray-900 [&_textarea::placeholder]:text-gray-500 [&_textarea]:border-gray-400
              [&_select]:bg-white [&_select]:text-gray-900 [&_select]:border-gray-400">
 
-
       <!-- General Info -->
       <div class="grid gap-4 md:grid-cols-2">
         <input type="text" name="client" placeholder="Client Name" class="input input-bordered w-full" required />
         <input type="text" name="unit_number" placeholder="Unit Number" class="input input-bordered w-full" required />
-        <input type="date" name="service_date" class="input input-bordered w-full md:col-span-2" required />
+
+      <div class="md:col-span-2">
+        <label class="block font-semibold mb-1">Date</label>
+        <input type="date" name="service_date" class="input input-bordered w-full" required />
       </div>
+    </div>
 
       <div class="flex gap-2">
   <input type="text" id="gps_location" name="gps_location" placeholder="GPS Coordinates" class="input input-bordered w-full" required />

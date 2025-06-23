@@ -139,8 +139,8 @@ def approve_pdf(submission_id: str):
         if os.path.exists(pdf_path):
             send_email_with_pdf(
                 to_email=recipient_email,
-                subject="✅ Your Clubroot Report Has Been Approved",
-                body="Thanks for submitting! Attached is your approved report PDF.",
+                subject="Alberta Powerwash - Clubroot Report Completed",
+                body="Please find your Clubroot report attached.",
                 pdf_path=pdf_path
             )
 

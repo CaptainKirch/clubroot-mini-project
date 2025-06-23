@@ -56,7 +56,7 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
                 c.drawImage(data["technician_signature_path"], x=455, y=210, width=90, height=35, mask='auto')
 
             # Foreman name (no signature)
-            c.drawString(225, 91, data.get("supervisor_name", ""))
+            
 
         c.save()
         packet.seek(0)

@@ -51,8 +51,6 @@ async def handle_form(
 
     technician_name: str = Form(...),
     technician_signature: str = Form(...),  # base64 string
-    supervisor_name: str = Form(...),
-    supervisor_signature: str = Form(...),
     technician_email: str = Form(...),
 ):
     submission_id = str(uuid4())
@@ -130,8 +128,6 @@ async def handle_form(
         "inspection_notes": inspection_notes,
         "technician_name": technician_name,
         "technician_signature_path": signature_path,  # pass to PDF generator
-        "supervisor_name": supervisor_name,
-        "supervisor_signature": supervisor_signature,
         "technician_email": technician_email
     }
 

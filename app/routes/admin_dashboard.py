@@ -6,7 +6,8 @@ import os
 import csv
 from pathlib import Path
 import random
-from app.scheduler import schedule_email  # make sure this is imported!
+from app.utils.send_email_with_pdf import send_email_with_pdf
+
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -129,16 +130,22 @@ def approve_pdf(submission_id: str):
     df.loc[df["submission_id"] == submission_id, "status"] = "approved"
     df.to_csv("app/data/form_log.csv", index=False)
 
-    # Get email and PDF path
+    # Get email + PDF
     email_row = df[df["submission_id"] == submission_id]
     if not email_row.empty:
         recipient_email = email_row["email"].values[0]
         pdf_path = f"app/data/submissions/{submission_id}/form_report.pdf"
 
-        # Send email immediately (no delay)
-        schedule_email(pdf_path=pdf_path, recipient=recipient_email, delay_minutes=0)
+        if os.path.exists(pdf_path):
+            send_email_with_pdf(
+                to_email=recipient_email,
+                subject="✅ Your Clubroot Report Has Been Approved",
+                body="Thanks for submitting! Attached is your approved report PDF.",
+                pdf_path=pdf_path
+            )
 
     return RedirectResponse("/admin-dashboard", status_code=303)
+
 
 @router.post("/update-email/{submission_id}")
 async def update_email(submission_id: str, email: str = Form(...)):

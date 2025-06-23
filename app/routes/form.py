@@ -31,7 +31,6 @@ async def handle_form(
     service_date: str = Form(...),
     equipment_description: str = Form(...),
     gps_location: str = Form(...),
-    dirt_level: int = Form(...),
     inspection_notes: str = Form(...),
 
     # BEFORE

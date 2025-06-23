@@ -39,25 +39,17 @@
         <input type="date" name="service_date" class="input input-bordered w-full md:col-span-2" required />
       </div>
 
-      <textarea name="equipment_description" placeholder="Equipment Description"
-                class="textarea textarea-bordered w-full" rows="3" required></textarea>
-
       <div class="flex gap-2">
   <input type="text" id="gps_location" name="gps_location" placeholder="GPS Coordinates" class="input input-bordered w-full" required />
   <button type="button" onclick="getLocation()" class="btn btn-sm bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">
     Get Location
   </button>
 </div>
-      <select name="dirt_level" class="select select-bordered w-full" required>
-        <option disabled selected>Dirt Level (1–5)</option>
-        {% for i in range(1, 6) %}
-          <option value="{{ i }}">{{ i }}</option>
-        {% endfor %}
-      </select>
 
       <!-- Inspection Notes -->
-      <textarea name="inspection_notes" placeholder="Pre-wash inspection notes"
-                class="textarea textarea-bordered w-full" rows="3" required></textarea>
+      <textarea name="inspection_notes" placeholder="Describe Equipment — truck, trailer, etc"
+          class="textarea textarea-bordered w-full" rows="3" required></textarea>
+
 
       <!-- Before Photos -->
 <div>
@@ -113,8 +105,9 @@
       <!-- Technician & Supervisor -->
       <div class="grid md:grid-cols-2 gap-4">
         <input type="text" name="technician_name" placeholder="Technician Name" class="input input-bordered w-full" required />
-        <input type="email" name="technician_email" placeholder="Technician Email" class="input input-bordered w-full" required />
-        <div>
+        <input type="email" name="technician_email" placeholder="Client Email" class="input input-bordered w-full" required />
+        
+<div class="md:col-span-2">
   <label class="block font-semibold mb-1">Technician Signature</label>
   <canvas id="signature-pad" class="border border-gray-400 rounded w-full h-48 bg-white"></canvas>
   <div class="flex gap-2 mt-2">
@@ -123,8 +116,8 @@
   <input type="hidden" id="technician_signature" name="technician_signature" required />
 </div>
 
-        <input type="text" name="supervisor_name" placeholder="Supervisor Name" class="input input-bordered w-full" required />
-        <input type="text" name="supervisor_signature" placeholder="Supervisor Signature" class="input input-bordered w-full" required />
+
+  
       </div>
 
       <button type="submit" class="btn w-full mt-4 bg-[#1DA1F2] hover:bg-[#1A91DA] text-white">Submit Report </button>

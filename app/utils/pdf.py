@@ -25,29 +25,32 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
 
         if page_num == 1:
             if images.get("before_left"):
-                c.drawImage(images["before_left"], x=160, y=562, width=100, height=66, mask='auto')
+                c.drawImage(images["before_left"], x=100, y=550, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("before_right"):
-                c.drawImage(images["before_right"], x=426, y=552, width=100, height=66, mask='auto')
+                c.drawImage(images["before_right"], x=330, y=550, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("before_wheel"):
-                c.drawImage(images["before_wheel"], x=167, y=252, width=100, height=66, mask='auto')
+                c.drawImage(images["before_wheel"], x=100, y=380, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("before_undercarriage"):
-                c.drawImage(images["before_undercarriage"], x=434, y=247, width=100, height=66, mask='auto')
+                c.drawImage(images["before_undercarriage"], x=330, y=380, width=180, height=120, preserveAspectRatio=True, mask='auto')
+
 
         if page_num == 2:
             if images.get("after_left"):
-                c.drawImage(images["after_left"], x=161, y=545, width=100, height=66, mask='auto')
+                c.drawImage(images["after_left"], x=100, y=550, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("after_right"):
-                c.drawImage(images["after_right"], x=430, y=544, width=100, height=66, mask='auto')
+                c.drawImage(images["after_right"], x=330, y=550, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("after_wheel"):
-                c.drawImage(images["after_wheel"], x=167, y=250, width=100, height=66, mask='auto')
+                c.drawImage(images["after_wheel"], x=100, y=380, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("after_undercarriage"):
-                c.drawImage(images["after_undercarriage"], x=430, y=269, width=100, height=66, mask='auto')
+                c.drawImage(images["after_undercarriage"], x=330, y=380, width=180, height=120, preserveAspectRatio=True, mask='auto')
+
 
         if page_num == 3:
             if images.get("disinfecting_wheel"):
-                c.drawImage(images["disinfecting_wheel"], x=165, y=553, width=100, height=66, mask='auto')
+                c.drawImage(images["disinfecting_wheel"], x=100, y=550, width=180, height=120, preserveAspectRatio=True, mask='auto')
             if images.get("disinfecting_undercarriage"):
-                c.drawImage(images["disinfecting_undercarriage"], x=428, y=546, width=100, height=66, mask='auto')
+                c.drawImage(images["disinfecting_undercarriage"], x=330, y=550, width=180, height=120, preserveAspectRatio=True, mask='auto')
+
 
             # Worker name and signature
             c.setFont("Helvetica", 10)

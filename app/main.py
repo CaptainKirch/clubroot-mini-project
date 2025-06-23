@@ -20,3 +20,7 @@ templates = Jinja2Templates(directory="app/templates")
 app.include_router(form.router)
 app.include_router(admin_dashboard.router)
 app.include_router(client_dashboard.router)
+
+@router.get("/success")
+def success_page(request: Request):
+    return templates.TemplateResponse("success.html", {"request": request})

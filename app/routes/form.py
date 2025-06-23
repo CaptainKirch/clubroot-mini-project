@@ -156,7 +156,7 @@ async def handle_form(
     # # Schedule email
     # schedule_email(pdf_path=pdf_path, recipient="marj@albertapowerwash.ca", delay_minutes=60)
 
-    return templates.TemplateResponse("form.html", {
-        "request": request,
-        "message": "Form submitted successfully!"
-    })
+    from fastapi.responses import RedirectResponse
+
+    return RedirectResponse(url="/success", status_code=303)
+

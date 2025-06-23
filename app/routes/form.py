@@ -19,6 +19,10 @@ router = APIRouter()
 async def show_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
+@router.get("/success", response_class=HTMLResponse)
+async def success_page(request: Request):
+    return templates.TemplateResponse("success.html", {"request": request})
+
 @router.post("/submit")
 async def handle_form(
     request: Request,

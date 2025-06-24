@@ -100,12 +100,9 @@ async def handle_form(
         "unit_number": unit_number,
         "service_date": service_date, 
         "gps_location": gps_location,
-        "dirt_level": dirt_level,
         "inspection_notes": inspection_notes,
         "technician_name": technician_name,
         "technician_signature": signature_path,
-        "supervisor_name": supervisor_name,
-        "supervisor_signature": supervisor_signature,
         "email": technician_email,
         "status": "awaiting_approval",
         "pdf_path": f"/submissions/{submission_id}/form_report.pdf"
@@ -121,7 +118,6 @@ async def handle_form(
         "unit_number": unit_number,
         "service_date": service_date,
         "gps_location": gps_location,
-        "dirt_level": dirt_level,
         "inspection_notes": inspection_notes,
         "technician_name": technician_name,
         "technician_signature_path": signature_path,  # pass to PDF generator

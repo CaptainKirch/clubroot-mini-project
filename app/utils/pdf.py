@@ -22,8 +22,8 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
             c.drawString(187, 650, data.get("service_date", ""))
             c.drawString(186, 624, data.get("unit_number", ""))
             desc = data.get("description", "")
-            text = c.beginText(185, 608)  # Adjust Y if needed
-            text.setFont("Helvetica", 10)
+            text = c.beginText(185, 595)  # Adjust Y if needed
+            text.setFont("Helvetica", 9)
             wrapped_lines = textwrap.wrap(desc, width=100)
             for line in wrapped_lines:
                 text.textLine(line)

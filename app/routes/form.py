@@ -104,13 +104,12 @@ async def handle_form(
         "unit_number": unit_number,
         "service_date": service_date, 
         "gps_location": gps_location,
-        "inspection_notes": inspection_notes,
+        "description": inspection_notes,
         "technician_name": technician_name,
         "technician_signature": signature_path,
         "email": technician_email,
         "status": "awaiting_approval",
         "pdf_path": f"/submissions/{submission_id}/form_report.pdf"
-  # ✅ This is the key line you're missing
     },
     "app/data/form_log.csv"
 )
@@ -122,7 +121,7 @@ async def handle_form(
         "unit_number": unit_number,
         "service_date": service_date,
         "gps_location": gps_location,
-        "inspection_notes": inspection_notes,
+        "description": inspection_notes,
         "technician_name": technician_name,
         "technician_signature_path": signature_path,  # pass to PDF generator
         "technician_email": technician_email
@@ -146,7 +145,7 @@ async def handle_form(
         "disinfecting_undercarriage": cleaned_images["disinfect_wheel_2"]
 }
     print("[DEBUG] form_data keys:", list(form_data.keys()))
-    
+
     print("[DEBUG] cleaned_images keys:", list(cleaned_images.keys()))
 
     try:
@@ -154,11 +153,6 @@ async def handle_form(
     except Exception as e:
         print("[PDF GENERATION ERROR]", e)
         raise
-
-
-
-    # # Schedule email
-    # schedule_email(pdf_path=pdf_path, recipient="marj@albertapowerwash.ca", delay_minutes=60)
 
     from fastapi.responses import RedirectResponse
 

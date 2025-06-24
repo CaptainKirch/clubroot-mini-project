@@ -18,11 +18,11 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
 
         # Page 1: Info + QR
         if page_num == 0:
-            c.drawString(187, 660, data.get("service_date", ""))
-            c.drawString(186, 634, data.get("unit_number", ""))
-            c.drawString(185, 608, data.get("description", ""))
-            c.drawString(185, 547, data.get("gps_location", ""))
-            c.drawImage(qr_path, x=469, y=680, width=100, height=100, mask='auto')
+            c.drawString(187, 650, data.get("service_date", ""))
+            c.drawString(186, 624, data.get("unit_number", ""))
+            c.drawString(185, 596, data.get("description", ""))
+            c.drawString(185, 537, data.get("gps_location", ""))
+            c.drawImage(qr_path, x=459, y=680, width=100, height=100, mask='auto')
 
         # Page 2: No overlay needed
         if page_num == 1:
@@ -60,7 +60,7 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
             # Technician info
             c.drawString(182, 321, data.get("technician_name", ""))
             if data.get("technician_signature_path") and os.path.exists(data["technician_signature_path"]):
-                c.drawImage(data["technician_signature_path"], x=448, y=322, width=90, height=35, mask='auto')
+                c.drawImage(data["technician_signature_path"], x=448, y=302, width=90, height=35, mask='auto')
 
         c.save()
         packet.seek(0)

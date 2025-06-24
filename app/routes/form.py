@@ -145,6 +145,9 @@ async def handle_form(
         "disinfecting_wheel": cleaned_images["disinfect_wheel_1"],
         "disinfecting_undercarriage": cleaned_images["disinfect_wheel_2"]
 }
+    print("[DEBUG] form_data keys:", list(form_data.keys()))
+    
+    print("[DEBUG] cleaned_images keys:", list(cleaned_images.keys()))
 
     try:
         generate_pdf(form_data, pdf_images, qr_path, pdf_path, background_template_path=template_path)

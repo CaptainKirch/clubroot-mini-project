@@ -20,7 +20,14 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
         if page_num == 0:
             c.drawString(187, 650, data.get("service_date", ""))
             c.drawString(186, 624, data.get("unit_number", ""))
-            c.drawString(185, 596, data.get("description", ""))
+            desc = data.get("description", "")
+            text = c.beginText(185, 608)  # Adjust Y if needed
+            text.setFont("Helvetica", 10)
+            for line in desc.splitlines():
+                text.textLine(line)
+
+            c.drawText(text)
+
             c.drawString(185, 537, data.get("gps_location", ""))
             c.drawImage(qr_path, x=459, y=680, width=100, height=100, mask='auto')
 

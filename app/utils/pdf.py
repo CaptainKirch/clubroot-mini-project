@@ -4,6 +4,7 @@ from PyPDF2 import PdfReader, PdfWriter
 from pathlib import Path
 from io import BytesIO
 import os
+import textwrap
 
 def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, background_template_path: str):
     bg_pdf = PdfReader(background_template_path)
@@ -23,11 +24,10 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
             desc = data.get("description", "")
             text = c.beginText(185, 608)  # Adjust Y if needed
             text.setFont("Helvetica", 10)
-            for line in desc.splitlines():
+            wrapped_lines = textwrap.wrap(desc, width=100)
+            for line in wrapped_lines:
                 text.textLine(line)
-
             c.drawText(text)
-
             c.drawString(185, 537, data.get("gps_location", ""))
             c.drawImage(qr_path, x=459, y=680, width=100, height=100, mask='auto')
 

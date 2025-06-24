@@ -22,3 +22,6 @@ app.include_router(admin_dashboard.router)
 app.include_router(client_dashboard.router)
 
 print("[BOOT] FastAPI loaded")
+
+from app.routes import health  # 👈 import it
+app.include_router(health.router)

@@ -82,7 +82,11 @@ async def handle_form(
 
         await file_io.save_file(file, save_dir, f"{label}.jpg")
         remove_background(raw_path, clean_path)
-        cleaned_images[label] = clean_path
+        if not os.path.exists(clean_path):
+            print(f"[ERROR] Missing cleaned image: {clean_path}")
+        else:
+            print(f"[OK] Cleaned image created: {clean_path}")
+            cleaned_images[label] = clean_path
 
     # Decode and save technician signature
     signature_data = technician_signature.split(",")[1]  # remove 'data:image/png;base64,'
@@ -142,7 +146,12 @@ async def handle_form(
         "disinfecting_undercarriage": cleaned_images["disinfect_wheel_2"]
 }
 
-    generate_pdf(form_data, pdf_images, qr_path, pdf_path, background_template_path=template_path)
+    try:
+        generate_pdf(form_data, pdf_images, qr_path, pdf_path, background_template_path=template_path)
+    except Exception as e:
+        print("[PDF GENERATION ERROR]", e)
+        raise
+
 
 
     # # Schedule email

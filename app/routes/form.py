@@ -156,5 +156,5 @@ async def handle_form(
 
     from fastapi.responses import RedirectResponse
 
-    return RedirectResponse(url="/success", status_code=303)
+    return RedirectResponse(url="https://clubrootapp.onrender.com/success", status_code=303)
 

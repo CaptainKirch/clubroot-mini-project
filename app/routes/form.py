@@ -102,11 +102,15 @@ async def handle_form(
         "submission_id": submission_id,
         "client": client,
         "unit_number": unit_number,
-        "service_date": service_date, 
+        "service_date": service_date,
+        "description": inspection_notes,  # repurposed use
         "gps_location": gps_location,
-        "description": inspection_notes,
+        "dirt_level": "",  # unused
+        "inspection_notes": inspection_notes,  # optionally duplicate for CSV clarity
         "technician_name": technician_name,
         "technician_signature": signature_path,
+        "supervisor_name": "",  # unused
+        "supervisor_signature": "",  # unused
         "email": technician_email,
         "status": "awaiting_approval",
         "pdf_path": f"/submissions/{submission_id}/form_report.pdf"

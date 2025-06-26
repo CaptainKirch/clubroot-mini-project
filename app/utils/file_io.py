@@ -25,6 +25,18 @@ CSV_COLUMNS = [
 
 def save_csv(data: Dict, csv_path: str):
     write_header = not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0
+
+    # Safety check
+    expected = set(CSV_COLUMNS)
+    actual = set(data.keys())
+    missing = expected - actual
+    extra = actual - expected
+
+    if missing:
+        print(f"[⚠️ CSV WARNING] Missing fields: {missing}")
+    if extra:
+        print(f"[⚠️ CSV WARNING] Extra fields: {extra}")
+
     with open(csv_path, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, quoting=csv.QUOTE_ALL)
         if write_header:
@@ -32,6 +44,7 @@ def save_csv(data: Dict, csv_path: str):
             writer.writeheader()
         print("[INFO] Writing row:", data)
         writer.writerow(data)
+
 
 def convert_heic_to_jpg(input_path: str, output_path: str):
     img = Image.open(input_path)

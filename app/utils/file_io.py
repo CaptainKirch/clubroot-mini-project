@@ -26,7 +26,7 @@ CSV_COLUMNS = [
 def save_csv(data: Dict, csv_path: str):
     write_header = not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0
     with open(csv_path, mode="a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, quoting=csv.QUOTE_MINIMAL)
+        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, quoting=csv.QUOTE_ALL)
         if write_header:
             writer.writeheader()
         writer.writerow(data)

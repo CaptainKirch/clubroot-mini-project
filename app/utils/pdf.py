@@ -28,7 +28,6 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
                 text.textLine(line)
             c.drawText(text)
             c.drawString(181, 660, data.get("gps_location", ""))
-            c.drawImage(qr_path, x=459, y=680, width=100, height=100, mask='auto')
 
         elif page_num == 1:
             # Page 2 – Before Pictures
@@ -63,7 +62,7 @@ def generate_pdf(data: dict, images: dict, qr_path: str, output_path: str, backg
             sig_path = data.get("technician_signature_path")
             if sig_path and os.path.exists(sig_path):
                 c.drawImage(sig_path, x=446, y=282, width=90, height=35, mask='auto')
-
+            c.drawImage(qr_path, x=33, y=25, width=100, height=100, mask='auto')
         c.save()
         packet.seek(0)
         overlay_streams.append(PdfReader(packet).pages[0])

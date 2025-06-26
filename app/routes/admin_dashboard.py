@@ -29,11 +29,14 @@ def admin_dashboard(request: Request):
         df["submission_id"] = df["submission_id"].astype(str).str.strip()
         df = df.dropna(subset=["submission_id"])
 
-        # Debug print
-        print("[DEBUG] Loaded records:")
-        print(df)
-
         records = df.to_dict(orient="records")
+
+        # 🔍 Debug output
+        print("[DEBUG] RECORD COUNT:", len(records))
+        if records:
+            print("[DEBUG] RECORD SAMPLE:", records[0])
+        else:
+            print("[DEBUG] No records loaded.")
     else:
         records = []
 
@@ -41,6 +44,7 @@ def admin_dashboard(request: Request):
         "request": request,
         "records": records
     })
+
 
 from fastapi.responses import FileResponse
 import os

@@ -103,21 +103,20 @@ async def handle_form(
         "client": client,
         "unit_number": unit_number,
         "service_date": service_date,
-        "description": inspection_notes,  # repurposed use
+        "description": inspection_notes,
         "gps_location": gps_location,
-        "dirt_level": "",  # unused
-        "inspection_notes": inspection_notes,  # optionally duplicate for CSV clarity
+        "dirt_level": "",
+        "inspection_notes": inspection_notes,
         "technician_name": technician_name,
         "technician_signature": signature_path,
-        "supervisor_name": "",  # unused
-        "supervisor_signature": "",  # unused
+        "supervisor_name": "",  # must be present
+        "supervisor_signature": "",  # must be present
         "email": technician_email,
         "status": "awaiting_approval",
         "pdf_path": f"/submissions/{submission_id}/form_report.pdf"
     },
     "app/data/form_log.csv"
 )
-
 
     # Generate PDF
     form_data = {

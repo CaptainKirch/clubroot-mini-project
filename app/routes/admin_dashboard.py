@@ -24,6 +24,15 @@ def admin_dashboard(request: Request):
     csv_path = "app/data/form_log.csv"
     if os.path.exists(csv_path):
         df = pd.read_csv(csv_path)
+
+        # Strip whitespace and drop rows with missing IDs
+        df["submission_id"] = df["submission_id"].astype(str).str.strip()
+        df = df.dropna(subset=["submission_id"])
+
+        # Debug print
+        print("[DEBUG] Loaded records:")
+        print(df)
+
         records = df.to_dict(orient="records")
     else:
         records = []

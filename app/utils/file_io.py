@@ -25,10 +25,12 @@ CSV_COLUMNS = [
 
 def save_csv(data: Dict, csv_path: str):
     write_header = not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0
-    with open(csv_path, mode="a", newline="") as f:
+    with open(csv_path, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, quoting=csv.QUOTE_ALL)
         if write_header:
+            print("[INFO] Writing header to CSV")
             writer.writeheader()
+        print("[INFO] Writing row:", data)
         writer.writerow(data)
 
 def convert_heic_to_jpg(input_path: str, output_path: str):

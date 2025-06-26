@@ -128,7 +128,7 @@ async def handle_form(
     }
 
     pdf_path = f"{save_dir}/form_report.pdf"
-    template_path = "static/clubroottemplatev2.pdf"
+    template_path = "static/clubrootfinaltemplate.pdf"
     # Remap image keys to match what PDF expects
     pdf_images = {
         "before_left": cleaned_images["before_left"],
@@ -157,4 +157,3 @@ async def handle_form(
     from fastapi.responses import RedirectResponse
 
     return RedirectResponse(url="https://clubrootapp.onrender.com/success", status_code=303)
-
